@@ -3,6 +3,7 @@
 // 获取URL
 @$id = $_GET['id'];
 @$key = $_GET['key'];
+@$serverid = $_GET['serverid'];
 if ($id=='' || $key==''){
     exit("ID或Key不能为空");
 }
@@ -34,6 +35,15 @@ if (!$sus){
         exit("未知错误");
     }
 }
-$players = $obj['Servers'][0]['Players'];
 
-echo $players;
+$serversCount = count($obj['Servers']);
+
+if (is_numeric($serverid) && $serverid >= 0 && $serverid < $serversCount){
+    $players = $obj['Servers'][$serverid]['Players'];
+    echo $players;
+}
+else{
+    foreach ($obj['Servers'] as $server) {
+        echo $server['Players'] . "\n";
+    }
+}
